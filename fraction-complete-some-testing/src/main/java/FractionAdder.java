@@ -19,8 +19,8 @@ public class FractionAdder {
 
             try {
                 f1 = new Fraction(numerator1, denominator1);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+            } catch (ZeroDenominatorException e) {
+                e.printStackTrace();
             }
         }
 

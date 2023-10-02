@@ -11,7 +11,12 @@ public class FractionTest {
         // Arrange
 
         // Act
-        Fraction f1 = new Fraction(1, 2);
+        Fraction f1 = null;
+        try {
+            f1 = new Fraction(1, 2);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
         Fraction f2 = new Fraction(5);
 
         // Assert
@@ -26,8 +31,19 @@ public class FractionTest {
         // Arrange
 
         // Act
-        Fraction f1 = new Fraction (1, -2);
-        Fraction f2 = new Fraction (-1, -3);
+        Fraction f1 = null;
+        Fraction f2 = null;
+        try {
+            f1 = new Fraction (1, -2);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            f2 = new Fraction (-1, -3);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertEquals("constructor doesn't move negative from denominator to numerator", -1, f1.getNumerator());
         Assert.assertEquals("constructor doesn't move negative from denominator to numerator", 2, f1.getDenominator());

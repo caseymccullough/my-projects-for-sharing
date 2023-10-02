@@ -1,9 +1,19 @@
 public class FractionDemo
 {
     public static void main(String[] args) {
-        
-        Fraction f1 = new Fraction (2,3); // calls to what?
-        Fraction f2 = new Fraction (2, 3);
+
+        Fraction f1 = null; // calls to what?
+        try {
+            f1 = new Fraction (2,3);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
+        Fraction f2 = null;
+        try {
+            f2 = new Fraction (2, 3);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
         Fraction f3 = f1;
 
 

@@ -13,6 +13,7 @@ public class FractionTest {
         // Assert
         Assert.assertEquals("constructor doesn't set numerator correctly", 1, f1.getNumerator());
         Assert.assertEquals("constructor doesn't set denominator correctly", 2, f1.getDenominator());
+
         Assert.assertEquals("one-argument constructor doesn't set correct numerator", 5, f2.getNumerator());
         Assert.assertEquals("one-argument constructor doesn't set denominator to 1", 1, f2.getDenominator());
     }
@@ -58,6 +59,19 @@ public class FractionTest {
         // Assert
         Assert.assertTrue("0/2 converts to 0/1", f1.getNumerator() == 0 && f1.getDenominator() == 1);
         Assert.assertTrue("0/-1 converts to 0/1", f2.getNumerator() == 0 && f2.getDenominator() == 1);
+
+    }
+
+    @Test
+    public void toDecimal_returns_correct_decimal_equivalent() {
+        // Arrange
+        Fraction f1 = new Fraction (1, 4);
+
+        // Act
+        double f1Decimal = f1.toDecimal();
+
+        // Assert
+        Assert.assertEquals("Decimal for 1/4 is not returned as 0.25", 0.25, f1Decimal, DELTA);
 
     }
 

@@ -44,12 +44,14 @@ public class MileageReport {
         } catch (FileNotFoundException e) {
             // Thrown by Scanner constructor when file is not found
             System.err.println("The file " + fileName + " doesn't exist");
+            System.err.println(e.getMessage());
         } catch (InputMismatchException e) {
             // Thrown by the Scanner class's nextDouble() method
             // when it encounters non-numeric data
             System.err.println("Non-numeric data found in the file");
+        } catch (Exception e){
+            // respond to any other errors
         }
 
-        System.out.println("Do we reach this code? ");
     }
 }

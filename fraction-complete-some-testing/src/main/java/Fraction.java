@@ -15,16 +15,14 @@ public class Fraction
     // and making only the numerator signed.
     //-----------------------------------------------------------------
     
- public Fraction (int numerator, int denominator)
- {
+ public Fraction (int numerator, int denominator) throws ZeroDenominatorException {
    this.numerator = numerator;
    
    if (denominator == 0) // ensures denominator is not zero
-     throw new IllegalArgumentException(
-            "Denominator cannot be zero");
-   else
-     this.denominator = denominator;
-
+     throw new ZeroDenominatorException();
+   else {
+       this.denominator = denominator;
+   }
    simplify();
      
   }
@@ -55,10 +53,14 @@ public class Fraction
       simplify();
   }
 
-  public void setDenominator (int denominator)
-  {
-       if (denominator != 0)
-            this.denominator = denominator;
+  public void setDenominator (int denominator) throws ZeroDenominatorException {
+       if (denominator != 0){
+           this.denominator = denominator;
+       } else {
+           throw new ZeroDenominatorException();
+       }
+
+
        simplify();
   }
   
@@ -67,7 +69,13 @@ public class Fraction
     //-----------------------------------------------------------------
     public Fraction reciprocal ()
     {
-        return new Fraction (denominator, numerator);
+        Fraction recip = null;
+        try {
+            recip = new Fraction (denominator, numerator);
+        } catch (ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
+        return recip;
     }
 
  //-----------------------------------------------------------------
@@ -108,13 +116,18 @@ public class Fraction
    //  denominators.
    //-----------------------------------------------------------------
    public Fraction add (Fraction op2)
-   {
+   {  Fraction sumFraction = null;
       int commonDenominator = denominator * op2.getDenominator();
       int numerator1 = numerator * op2.getDenominator();
       int numerator2 = op2.getNumerator() * denominator;
       int sum = numerator1 + numerator2;
 
-      return new Fraction (sum, commonDenominator);
+       try {
+           sumFraction = new Fraction (sum, commonDenominator);
+       } catch (ZeroDenominatorException e) {
+           e.printStackTrace();
+       }
+       return sumFraction;
    }
 
    //-----------------------------------------------------------------
