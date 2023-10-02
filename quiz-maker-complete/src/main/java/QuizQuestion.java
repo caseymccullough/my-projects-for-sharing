@@ -32,4 +32,17 @@ public class QuizQuestion {
     public boolean isCorrectAnswer (String answer) {
         return this.correctAnswer.equals(answer);
     }
+
+    @Override
+    public String toString(){
+        String questionInfo = "";
+        questionInfo += "Question: " + question;
+        questionInfo += "\nPossible answers: ";
+        for (String answer : answers) {
+            questionInfo += "\n" + answer;
+        }
+        questionInfo += "\nCorrect answer: " + correctAnswer;
+
+        return questionInfo;
+    }
 }
