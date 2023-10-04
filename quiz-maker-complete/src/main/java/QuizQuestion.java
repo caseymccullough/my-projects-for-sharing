@@ -10,7 +10,7 @@ public class QuizQuestion {
         for (int i = 1; i < questionParts.length; i++){
             String answer = questionParts[i];
             if (answer.endsWith("*")){
-                answer = answer.substring(0, answer.length() - 1); // remote asterisk
+                answer = answer.substring(0, answer.length() - 1); // remove asterisk
                 this.correctAnswer = answer;
             }
             this.answers[i - 1] = answer;
