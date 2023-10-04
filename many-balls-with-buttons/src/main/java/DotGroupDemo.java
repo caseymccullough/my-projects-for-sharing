@@ -42,6 +42,8 @@ public class DotGroupDemo extends JFrame {
         panel.setBackground(Color.darkGray);
 
         redToggleButton = new JButton("RED");
+        redToggleButton.setForeground(Color.RED);
+
         redToggleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 redDots.changeVisibility();
@@ -50,6 +52,8 @@ public class DotGroupDemo extends JFrame {
         });
 
         blueToggleButton = new JButton("BLUE");
+        blueToggleButton.setForeground(Color.BLUE);
+
         blueToggleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 blueDots.changeVisibility();

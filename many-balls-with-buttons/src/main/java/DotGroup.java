@@ -8,10 +8,14 @@ public class DotGroup {
 
     public DotGroup (int[] xPos, int[] yPos, Color color){
 
-        this.dots = new Dot[xPos.length];
-        for (int i = 0; i < xPos.length; i++){
-            Dot dot = new Dot (xPos[i], yPos[i], color);
-            dots[i] = dot;
+        this.dots = new Dot[xPos.length * yPos.length];
+        int dotPos = 0;
+        for (int x = 0; x < xPos.length; x++){
+            for (int y = 0; y < yPos.length; y++) {
+                Dot dot = new Dot(xPos[x], yPos[y], color);
+                dots[dotPos] = dot;
+                dotPos++;
+            }
         }
         this.color = color;
         this.isVisible = true;
