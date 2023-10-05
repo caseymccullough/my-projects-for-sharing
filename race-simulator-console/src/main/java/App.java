@@ -7,9 +7,14 @@ import java.util.*;
 public class App {
     private final Scanner sc = new Scanner(System.in);
     private final String FILE_PATH = "src/main/data/runner_data.txt";
+    File dataFile = new File(FILE_PATH);
     private static int nextId;
 
-    private Map <Integer, Runner> runners = new HashMap<>();
+    private Map<Integer, Runner> runners = new HashMap<>();
+
+    private static int getNextid() {
+        return nextId;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         App app = new App();
@@ -18,7 +23,7 @@ public class App {
     }
 
     private void loadRunners() throws FileNotFoundException {
-        File dataFile = new File(FILE_PATH);
+
         try (Scanner fileReader = new Scanner(dataFile)) {
             nextId = Integer.parseInt(fileReader.nextLine());
             System.out.println("next id: " + nextId);
@@ -29,7 +34,7 @@ public class App {
                 String lastName = runnerData[1];
                 int bibNumber = Integer.parseInt(runnerData[2]);
                 Runner runner = new Runner(firstName, lastName, bibNumber);
-                runners.put (bibNumber, runner);
+                runners.put(bibNumber, runner);
             }
         } catch (FileNotFoundException e) {
             // Could not find the file at the specified path
@@ -61,7 +66,7 @@ public class App {
         }
     }
 
-    private void removeRunner (int bibNumber) {
+    private void removeRunner(int bibNumber) {
 
     }
 
@@ -72,12 +77,30 @@ public class App {
             printMainMenu();
             int mainMenuSelection = promptForMenuSelection("Please choose an option: ");
             if (mainMenuSelection == 1) {
-                // display all runners
-                for (Map.Entry<Integer, Runner> runner : runners.entrySet()) {
-                    System.out.println(runner);
-                }
-
+                displayAllRunners();
             } else if (mainMenuSelection == 2) {
+                int bibNumber = -1;
+                do {
+                    System.out.print("Please enter the runner's bib number: ");
+                    try {
+                        bibNumber = Integer.parseInt(sc.nextLine());
+                        System.out.println("Looking up bib number " + bibNumber);
+                        Runner selectedRunner = runners.get(bibNumber);
+                        if (selectedRunner == null) {
+                            System.out.println("**Bib number " + bibNumber + " not found.**");
+                            bibNumber = -1;
+                        } else {
+                            System.out.println(selectedRunner);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid entry. Need a valid integer.");
+                        bibNumber = -1;
+                    }
+                } while (bibNumber == -1) ;
+
+
+
+            } else if (mainMenuSelection == 3) {
                 System.out.println("Add new runners here");
                 Runner newRunner = generateRunner();
                 System.out.println("Adding new runner:");
@@ -85,12 +108,30 @@ public class App {
                 runners.put(newRunner.getBibNumber(), newRunner);
                 System.out.println("adding runner to file");
                 addRunnerToFile(newRunner);
+
+            } else if (mainMenuSelection == 4) {
+                System.out.println("Saving new configuration");
+                //try (PrintWriter outputFile = new PrintWriter ("test.txt")){
+                try (PrintWriter outputFile = new PrintWriter(dataFile);) {
+                    System.out.println(getNextid());
+                    outputFile.println(getNextid());
+
+                    runners = new TreeMap<>(runners); // sorts it by key (bib number)
+                    for (Map.Entry<Integer, Runner> runner : runners.entrySet()) {
+                        System.out.println(runner.getValue().singleLineString());
+                        outputFile.println(runner.getValue().singleLineString());
+                    }
+                    // outputFile.flush();
+                } catch (FileNotFoundException e) {
+                    System.out.println("Error writing to file at " + dataFile.getAbsolutePath());
+                }
+
+
             } else if (mainMenuSelection == 0) {
                 break;
             }
         }
     }
-
 
     // UI methods
 
@@ -100,14 +141,17 @@ public class App {
     }
 
     private void printMainMenu() {
+        System.out.println("\n**OPTIONS**");
         System.out.println("1: Display all runners");
-        System.out.println("2: Add a runner");
+        System.out.println("2: Display a single runner");
+        System.out.println("3: Add a runner");
+        System.out.println("4: Save information to file");
         System.out.println("0: Exit");
         System.out.println();
     }
 
     private int promptForMenuSelection(String prompt) {
-        System.out.println(prompt);
+        System.out.print(prompt);
         int menuSelection;
         try {
             menuSelection = Integer.parseInt(sc.nextLine());
@@ -115,7 +159,12 @@ public class App {
             menuSelection = -1;
         }
         return menuSelection;
+    }
 
+    public void displayAllRunners() {
+        for (Map.Entry<Integer, Runner> runner : runners.entrySet()) {
+            System.out.println(runner);
+        }
     }
 
 }

@@ -23,10 +23,13 @@ public class Runner {
 
     @Override
     public String toString() {
-        return "Runner{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", bibNumber=" + bibNumber +
-                '}';
+        String s =  "Runner # " + bibNumber +
+        "\n" + firstName + ", " + lastName;
+        return s;
+    }
+
+    public String singleLineString() {
+        String s = bibNumber + "\t" + firstName + "\t" + lastName;
+        return s;
     }
 }
