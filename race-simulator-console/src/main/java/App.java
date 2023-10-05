@@ -16,6 +16,10 @@ public class App {
         return nextId;
     }
 
+    private static void incrementId() {
+        nextId++;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         App app = new App();
         app.loadRunners();
@@ -28,14 +32,17 @@ public class App {
             nextId = Integer.parseInt(fileReader.nextLine());
             System.out.println("next id: " + nextId);
             while (fileReader.hasNextLine()) {
+
                 String lineOfInput = fileReader.nextLine();
                 String[] runnerData = lineOfInput.split("\\s+");
-                String firstName = runnerData[0];
-                String lastName = runnerData[1];
-                int bibNumber = Integer.parseInt(runnerData[2]);
+                int bibNumber = Integer.parseInt(runnerData[0]);
+                String firstName = runnerData[1];
+                String lastName = runnerData[2];
+
                 Runner runner = new Runner(firstName, lastName, bibNumber);
                 runners.put(bibNumber, runner);
             }
+            sortRunners();
         } catch (FileNotFoundException e) {
             // Could not find the file at the specified path
             System.out.println("The runner data file was not found at " + dataFile.getAbsolutePath());
@@ -45,6 +52,9 @@ public class App {
     private Runner generateRunner() {
         String firstName = null;
         String lastName = null;
+        int id = getNextId();
+        incrementId();
+
         do {
             System.out.print("Enter runner's first name: ");
             firstName = sc.nextLine();
@@ -54,7 +64,7 @@ public class App {
             lastName = sc.nextLine();
         } while (lastName == null || lastName.isBlank());
 
-        return new Runner(firstName, lastName, getNextId());
+        return new Runner(firstName, lastName, id);
     }
 
     private void addRunnerToFile(Runner runner) {
@@ -64,10 +74,6 @@ public class App {
         } catch (FileNotFoundException e) {
             System.err.println("Cannot open the file for writing.");
         }
-    }
-
-    private void removeRunner(int bibNumber) {
-
     }
 
     private void run() {
@@ -106,13 +112,10 @@ public class App {
                 System.out.println("Adding new runner:");
                 System.out.println(newRunner);
                 runners.put(newRunner.getBibNumber(), newRunner);
-                System.out.println("adding runner to file");
-                addRunnerToFile(newRunner);
 
             } else if (mainMenuSelection == 4) {
                 System.out.println("Saving new configuration");
-                //try (PrintWriter outputFile = new PrintWriter ("test.txt")){
-                try (PrintWriter outputFile = new PrintWriter(dataFile);) {
+                try (PrintWriter outputFile = new PrintWriter(dataFile)) {
                     System.out.println(getNextid());
                     outputFile.println(getNextid());
 
@@ -136,7 +139,6 @@ public class App {
     // UI methods
 
     private static int getNextId() {
-        nextId++;
         return nextId;
     }
 
@@ -165,6 +167,10 @@ public class App {
         for (Map.Entry<Integer, Runner> runner : runners.entrySet()) {
             System.out.println(runner);
         }
+    }
+
+    public void sortRunners() {
+        runners = new TreeMap<>(runners); // sorts it by key (bib number)
     }
 
 }
