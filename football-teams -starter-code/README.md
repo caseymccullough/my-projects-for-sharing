@@ -135,6 +135,6 @@ Option 2 gives you the option to display all games.
 
 #### Requirement 4 (BONUS): Have each team store information about its own games
 
-This is a somewhat open-ended task. Have each team store an ArrayList of its own games. 
+This is a somewhat open-ended task, have fun with it. Have each team store an ArrayList of its own games. 
 Or, alternatively, each team can store only its wins and losses thus far through the season.
 
