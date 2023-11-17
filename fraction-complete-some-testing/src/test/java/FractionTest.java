@@ -20,7 +20,7 @@ public class FractionTest {
         Fraction f2 = new Fraction(5);
 
         // Assert
-        Assert.assertEquals("constructor doesn't set numerator correctly", 3, f1.getNumerator());
+        Assert.assertEquals("constructor doesn't set numerator correctly", 1, f1.getNumerator());
         Assert.assertEquals("constructor doesn't set denominator correctly", 2, f1.getDenominator());
         Assert.assertEquals("one-argument constructor doesn't set correct numerator", 5, f2.getNumerator());
         Assert.assertEquals("one-argument constructor doesn't set denominator to 1", 1, f2.getDenominator());
@@ -51,7 +51,7 @@ public class FractionTest {
     }
 
     @Test
-    public void constructor__correctly_reduces_positive_numbers () {
+    public void constructor__correctly_reduces_positive_numbers () throws ZeroDenominatorException {
         Fraction f1 = new Fraction (2, 4);
         Fraction f2 = new Fraction (4, 2);
         Fraction f3 = new Fraction (3, 9);
@@ -70,7 +70,7 @@ public class FractionTest {
     }
 
     @Test
-    public void constructor_converts_all_zero_values_to_0_over_1 () {
+    public void constructor_converts_all_zero_values_to_0_over_1 () throws ZeroDenominatorException {
         Fraction f1 = new Fraction(0, 2);
         Fraction f2 = new Fraction(0, -1);
 
@@ -80,7 +80,7 @@ public class FractionTest {
     }
 
     @Test
-    public void getDouble_returns_correct_decimal_equivalent () {
+    public void getDouble_returns_correct_decimal_equivalent () throws ZeroDenominatorException {
 
         Fraction f1 = new Fraction (1, 4);
         Fraction f2 = new Fraction (1, 3);
@@ -94,7 +94,7 @@ public class FractionTest {
     }
 
     @Test
-    public void reciprocal_returns_correct_value() {
+    public void reciprocal_returns_correct_value() throws ZeroDenominatorException {
         Fraction reciprocal1 = new Fraction (1, 2).reciprocal();
         Fraction reciprocal2 = new Fraction (3, 5).reciprocal();
 
@@ -103,7 +103,7 @@ public class FractionTest {
     }
 
     @Test
-    public void equals_works_correctly() {
+    public void equals_works_correctly() throws ZeroDenominatorException {
         Fraction f1 = new Fraction(1, 2);
         Fraction f2 = new Fraction (1, 2);
         Fraction f3 = new Fraction(1, 3);
@@ -115,7 +115,7 @@ public class FractionTest {
     }
 
     @Test
-    public void toString_returns_proper_string() {
+    public void toString_returns_proper_string() throws ZeroDenominatorException {
         Fraction f1 = new Fraction (1, 2);
         Fraction f2 = new Fraction (5);
 
@@ -124,7 +124,7 @@ public class FractionTest {
     }
 
     @Test
-    public void add_returns_correct_values() {
+    public void add_returns_correct_values() throws ZeroDenominatorException {
         Fraction f1 = new Fraction(1, 2);
         Fraction f2 = new Fraction (1, 4);
         Fraction f3 = new Fraction (2, 3);

@@ -38,8 +38,9 @@ public class App {
                 int bibNumber = Integer.parseInt(runnerData[0]);
                 String firstName = runnerData[1];
                 String lastName = runnerData[2];
+                char gender = runnerData[3].charAt(0);
 
-                Runner runner = new Runner(firstName, lastName, bibNumber);
+                Runner runner = new Runner(firstName, lastName, gender,  bibNumber);
                 runners.put(bibNumber, runner);
             }
             sortRunners();
@@ -52,6 +53,7 @@ public class App {
     private Runner generateRunner() {
         String firstName = null;
         String lastName = null;
+        char gender;
         int id = getNextId();
         incrementId();
 
@@ -63,8 +65,13 @@ public class App {
             System.out.print("Enter runner's last name: ");
             lastName = sc.nextLine();
         } while (lastName == null || lastName.isBlank());
+        do {
+            System.out.print("Enter runner's gender (M or F): ");
+            String genderString = sc.nextLine().toUpperCase();
+            gender = genderString.charAt(0);
+        } while (gender != 'M' && gender != 'F');
 
-        return new Runner(firstName, lastName, id);
+        return new Runner(firstName, lastName, gender,  id);
     }
 
     private void addRunnerToFile(Runner runner) {

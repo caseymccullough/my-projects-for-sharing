@@ -44,7 +44,7 @@ public class FractionTester
             result[numValidFractions] = new Fraction(n, d); // calls to what? 
             numValidFractions++;
            }
-           catch (IllegalArgumentException e)
+           catch (ZeroDenominatorException e)
            {
             System.out.println ("-->Invalid Fraction.  Please try again: ");
            }
@@ -70,11 +70,10 @@ public class FractionTester
     {
       f = new Fraction( num, den ); 
     }
-    catch ( ArithmeticException e )
-    {
-      System.out.println("Error creating the fraction " + num + " / " + den + " because " + e.toString() );
+    catch (ZeroDenominatorException e) {
+        System.out.println("Error creating the fraction " + num + " / " + den + " because " + e.toString() );
     }
-    return f; 
+      return f;
   }
     
 }

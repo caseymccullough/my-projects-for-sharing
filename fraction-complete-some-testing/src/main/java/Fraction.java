@@ -134,14 +134,17 @@ public class Fraction
    //  Subtracts the rational number passed as a parameter from this
    //  rational number.
    //-----------------------------------------------------------------
-   public Fraction subtract (Fraction op2)
-   {
+   public Fraction subtract (Fraction op2) {
       int commonDenominator = denominator * op2.getDenominator();
       int numerator1 = numerator * op2.getDenominator();
       int numerator2 = op2.getNumerator() * denominator;
       int difference = numerator1 - numerator2;
 
-      return new Fraction (difference, commonDenominator);
+       try {
+           return new Fraction (difference, commonDenominator);
+       } catch (ZeroDenominatorException e) {
+           throw new RuntimeException("Illegal Fraction created");
+       }
    }
 
  
@@ -149,7 +152,12 @@ public class Fraction
  {
       int n = this.getNumerator() * f1.getNumerator();
       int d = this.getDenominator() * f1.getDenominator();
-      return new Fraction (n, d);
+      try {
+          return new Fraction(n, d);
+      } catch (ZeroDenominatorException e) {
+          throw new RuntimeException("Illegal Fraction created");
+
+      }
  }
  
   Fraction divide (Fraction f1)
@@ -157,7 +165,12 @@ public class Fraction
        // multiply by the reciprocal of f1
       int n = this.getNumerator() * f1.getDenominator();
       int d = this.getDenominator() * f1.getNumerator();
-      return new Fraction (n, d);
+      try {
+          return new Fraction(n, d);
+      }  catch (ZeroDenominatorException e) {
+     throw new RuntimeException("Illegal Fraction created");
+
+ }
  }
  
   //-----------------------------------------------------------------
